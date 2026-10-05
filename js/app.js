@@ -128,9 +128,20 @@ const projectsData = [
   }
 ];
 
+// Utility: image fallback
+function setImgFallback(img) {
+  if (!img) return;
+  img.onerror = function () {
+    if (this.dataset.fallbackApplied) return;
+    this.dataset.fallbackApplied = "true";
+    this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='675'%3E%3Crect width='1200' height='675' fill='%23f2f2f2'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui,sans-serif' font-size='28' fill='%23262626'%3EProject Image%3C/text%3E%3C/svg%3E";
+  };
+}
+
 // Document Ready Initialization
 document.addEventListener("DOMContentLoaded", () => {
   initTheme();
+  updateFilterCounts();
   renderProjects("all");
   initProjectFilters();
   initModals();
@@ -140,13 +151,11 @@ document.addEventListener("DOMContentLoaded", () => {
   initCvDownload();
 });
 
-// 1. Theme Switcher (Strict Solid Colors: Light / Dark)
+// 1. Theme Switcher
 function initTheme() {
   const toggleBtn = document.getElementById("themeToggleBtn");
   const savedTheme = localStorage.getItem("portfolio-theme") || "light";
-  
   applyTheme(savedTheme);
-  
   if (toggleBtn) {
     toggleBtn.addEventListener("click", () => {
       const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
@@ -169,79 +178,87 @@ function applyTheme(theme) {
   }
 }
 
-// 2. Render Projects Grid
+// Filter counts
+function updateFilterCounts() {
+  const total = projectsData.length;
+  const counts = {
+    all: total,
+    enterprise: projectsData.filter(p => p.category === "enterprise").length,
+    fintech: projectsData.filter(p => p.category === "fintech").length,
+    editorial: projectsData.filter(p => p.category === "editorial").length,
+    mobile: projectsData.filter(p => p.category === "mobile").length
+  };
+  const buttons = document.querySelectorAll(".filter-btn");
+  buttons.forEach(btn => {
+    const f = btn.getAttribute("data-filter");
+    if (f === "all") btn.textContent = `Semua Proyek (${counts.all})`;
+    if (f === "enterprise") btn.textContent = `Enterprise & SIMRS (${counts.enterprise})`;
+    if (f === "fintech") btn.textContent = `FinTech & UI/UX (${counts.fintech})`;
+    if (f === "editorial") btn.textContent = `Editorial & Desain (${counts.editorial})`;
+    if (f === "mobile") btn.textContent = `Aplikasi Mobile (${counts.mobile})`;
+  });
+}
+
+// 2. Render Projects
 function renderProjects(filterCategory = "all") {
   const grid = document.getElementById("projectsGrid");
   if (!grid) return;
-
-  const filtered = filterCategory === "all" 
-    ? projectsData 
-    : projectsData.filter(p => p.category === filterCategory);
-
+  const filtered = filterCategory === "all" ? projectsData : projectsData.filter(p => p.category === filterCategory);
   grid.innerHTML = "";
-
   filtered.forEach(project => {
     const card = document.createElement("article");
     card.className = "project-card";
     card.setAttribute("data-id", project.id);
-
     const techTagsHtml = project.tech.slice(0, 4).map(t => `<span class="tech-tag">${t}</span>`).join("");
-
     card.innerHTML = `
-      <div class="project-img-box">
+      <div class="project-img-box" data-action="open-detail" data-id="${project.id}" style="cursor:pointer;">
         <span class="project-category-badge">${project.categoryLabel}</span>
-        <img src="${project.image}" alt="${project.title}" class="project-img" loading="lazy">
+        <img src="${project.image}" alt="${project.title}" class="project-img" loading="lazy" data-fallback>
       </div>
       <div class="project-content">
         <div class="project-meta-row">
           <span>Klien: ${project.client}</span>
           <span>Tahun: ${project.year}</span>
         </div>
-        <h3 class="project-title">${project.title}</h3>
+        <h3 class="project-title" data-action="open-detail" data-id="${project.id}" style="cursor:pointer;">${project.title}</h3>
         <p class="project-desc">${project.description}</p>
-        
         <div class="project-role-box">
           <span class="project-role-label">Peran & Tanggung Jawab:</span>
           <span class="project-role-text">${project.role}</span>
         </div>
-
         <div class="project-tech-stack">
           ${techTagsHtml}
           ${project.tech.length > 4 ? `<span class="tech-tag">+${project.tech.length - 4} Lainnya</span>` : ''}
         </div>
-
         <div class="project-actions">
-          <button class="btn-project-detail" data-action="open-detail" data-id="${project.id}">
-            Lihat Studi Kasus
-          </button>
-          <button class="btn-project-link" data-action="open-demo" data-id="${project.id}">
-            Kunjungi Demo
-          </button>
+          <button class="btn-project-detail" data-action="open-detail" data-id="${project.id}">Lihat Studi Kasus</button>
+          <button class="btn-project-link" data-action="open-demo" data-id="${project.id}">Kunjungi Demo</button>
         </div>
       </div>
     `;
-
     grid.appendChild(card);
   });
-
-  // Attach click listeners to cards
-  grid.querySelectorAll('[data-action="open-detail"]').forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const id = parseInt(e.target.getAttribute("data-id"));
+  grid.querySelectorAll("img[data-fallback]").forEach(setImgFallback);
+  grid.querySelectorAll('[data-action="open-detail"]').forEach(el => {
+    el.addEventListener("click", (e) => {
+      const id = parseInt(el.getAttribute("data-id") || e.currentTarget.getAttribute("data-id"));
       openProjectModal(id);
     });
   });
-
   grid.querySelectorAll('[data-action="open-demo"]').forEach(btn => {
     btn.addEventListener("click", (e) => {
-      const id = parseInt(e.target.getAttribute("data-id"));
+      const id = parseInt(btn.getAttribute("data-id"));
       const p = projectsData.find(item => item.id === id);
-      showToast(`Membuka demo: ${p ? p.title : 'Proyek'}`);
+      if (p && p.liveDemo && p.liveDemo !== "#") {
+        window.open(p.liveDemo, "_blank", "noopener,noreferrer");
+      } else {
+        showToast(`Demo: ${p ? p.title : 'Proyek'} (akan segera tersedia)`);
+      }
     });
   });
 }
 
-// 3. Filter Buttons Handler
+// 3. Filters
 function initProjectFilters() {
   const filterBtns = document.querySelectorAll(".filter-btn");
   filterBtns.forEach(btn => {
@@ -254,89 +271,56 @@ function initProjectFilters() {
   });
 }
 
-// 4. Modal Handlers (Project Detail & CV)
+// 4. Modal
 function initModals() {
   const overlay = document.getElementById("projectModalOverlay");
   const closeBtn = document.getElementById("modalCloseBtn");
-
   if (closeBtn && overlay) {
-    closeBtn.addEventListener("click", () => closeModal());
-    overlay.addEventListener("click", (e) => {
-      if (e.target === overlay) closeModal();
-    });
+    closeBtn.addEventListener("click", closeModal);
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
   }
-
-  // Keyboard navigation: Close modal on ESC key
   window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && overlay && overlay.classList.contains("active")) {
-      closeModal();
-    }
+    const ov = document.getElementById("projectModalOverlay");
+    if (e.key === "Escape" && ov && ov.classList.contains("active")) closeModal();
   });
 }
 
 function openProjectModal(projectId) {
   const project = projectsData.find(p => p.id === projectId);
   if (!project) return;
-
   const overlay = document.getElementById("projectModalOverlay");
   const modalBody = document.getElementById("modalDynamicContent");
-
   if (!overlay || !modalBody) return;
-
   const techBadges = project.tech.map(t => `<span class="tech-tag">${t}</span>`).join(" ");
-
   modalBody.innerHTML = `
-    <img src="${project.image}" alt="${project.title}" class="modal-project-img">
-    <div class="badge" style="margin-bottom: 0.75rem;">${project.categoryLabel}</div>
+    <img src="${project.image}" alt="${project.title}" class="modal-project-img" data-fallback>
+    <div class="badge" style="margin-bottom:0.75rem;">${project.categoryLabel}</div>
     <h2 class="modal-project-title">${project.title}</h2>
-    
     <div class="modal-meta-grid">
-      <div class="modal-meta-item">
-        <span class="modal-meta-label">Klien / Partner</span>
-        <span class="modal-meta-val">${project.client}</span>
-      </div>
-      <div class="modal-meta-item">
-        <span class="modal-meta-label">Tahun Rilis</span>
-        <span class="modal-meta-val">${project.year}</span>
-      </div>
-      <div class="modal-meta-item">
-        <span class="modal-meta-label">Peran</span>
-        <span class="modal-meta-val">${project.role}</span>
-      </div>
+      <div class="modal-meta-item"><span class="modal-meta-label">Klien / Partner</span><span class="modal-meta-val">${project.client}</span></div>
+      <div class="modal-meta-item"><span class="modal-meta-label">Tahun Rilis</span><span class="modal-meta-val">${project.year}</span></div>
+      <div class="modal-meta-item"><span class="modal-meta-label">Peran</span><span class="modal-meta-val">${project.role}</span></div>
     </div>
-
-    <div class="modal-body-section">
-      <h3 class="modal-section-h">Ikhtisar & Masalah yang Diselesaikan</h3>
-      <p class="modal-section-p">${project.description}</p>
-    </div>
-
-    <div class="modal-body-section">
-      <h3 class="modal-section-h">Peran & Tanggung Jawab Utama</h3>
-      <p class="modal-section-p">${project.responsibilities}</p>
-    </div>
-
-    <div class="modal-body-section">
-      <h3 class="modal-section-h">Konsep Desain & Pendekatan Teknis</h3>
-      <p class="modal-section-p">${project.concept}</p>
-    </div>
-
-    <div class="modal-body-section">
-      <h3 class="modal-section-h">Teknologi & Tools yang Digunakan</h3>
-      <div class="project-tech-stack" style="margin-top: 0.5rem;">
-        ${techBadges}
-      </div>
-    </div>
-
-    <div style="margin-top: 2rem; display: flex; gap: 1rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
-      <button class="btn-hero-solid" onclick="showToast('Tautan proyek live siap diakses.')">
-        Kunjungi Sistem Live
-      </button>
-      <button class="btn-hero-outline" onclick="closeModal()">
-        Tutup [ESC]
-      </button>
+    <div class="modal-body-section"><h3 class="modal-section-h">Ikhtisar & Masalah yang Diselesaikan</h3><p class="modal-section-p">${project.description}</p></div>
+    <div class="modal-body-section"><h3 class="modal-section-h">Peran & Tanggung Jawab Utama</h3><p class="modal-section-p">${project.responsibilities}</p></div>
+    <div class="modal-body-section"><h3 class="modal-section-h">Konsep Desain & Pendekatan Teknis</h3><p class="modal-section-p">${project.concept}</p></div>
+    <div class="modal-body-section"><h3 class="modal-section-h">Teknologi & Tools yang Digunakan</h3><div class="project-tech-stack" style="margin-top:0.5rem;">${techBadges}</div></div>
+    <div style="margin-top:2rem;display:flex;gap:1rem;border-top:1px solid var(--border-color);padding-top:1.5rem;">
+      <button class="btn-hero-solid" id="modalLiveBtn">Kunjungi Sistem Live</button>
+      <button class="btn-hero-outline" onclick="closeModal()">Tutup [ESC]</button>
     </div>
   `;
-
+  modalBody.querySelectorAll("img[data-fallback]").forEach(setImgFallback);
+  const liveBtn = modalBody.querySelector("#modalLiveBtn");
+  if (liveBtn) {
+    liveBtn.addEventListener("click", () => {
+      if (project.liveDemo && project.liveDemo !== "#") {
+        window.open(project.liveDemo, "_blank", "noopener,noreferrer");
+      } else {
+        showToast("Tautan proyek live akan segera tersedia.");
+      }
+    });
+  }
   overlay.classList.add("active");
   document.body.style.overflow = "hidden";
 }
@@ -349,163 +333,59 @@ function closeModal() {
   }
 }
 
-// 5. Contact Form Handler
+// 5. Contact Form
 function initContactForm() {
   const form = document.getElementById("contactForm");
   if (!form) return;
-
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-
     const name = document.getElementById("senderName").value.trim();
     const email = document.getElementById("senderEmail").value.trim();
-    const subject = document.getElementById("msgSubject").value;
     const message = document.getElementById("senderMessage").value.trim();
-
     if (!name || !email || !message) {
       showToast("Harap lengkapi semua kolom yang wajib diisi!");
       return;
     }
-
-    // Submit Simulation
-    const submitBtn = form.querySelector(".btn-form-submit");
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = "MENGIRIM PESAN...";
-    submitBtn.disabled = true;
-
-    setTimeout(() => {
-      submitBtn.textContent = originalText;
-      submitBtn.disabled = false;
-      form.reset();
-      showToast("Pesan Anda telah berhasil terkirim. Terima kasih!");
-    }, 900);
+    showToast("Pesan berhasil dikirim! Terima kasih, saya akan merespons secepat mungkin.");
+    form.reset();
   });
 }
 
-// 6. CV Download Simulation
+// Toast
+function showToast(msg) {
+  const toast = document.getElementById("appToast");
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2800);
+}
+
+// Mobile menu, scroll nav, CV (minimal)
+function initMobileMenu() {
+  const btn = document.getElementById("mobileMenuBtn");
+  const nav = document.getElementById("navLinks");
+  if (btn && nav) {
+    btn.addEventListener("click", () => nav.classList.toggle("mobile-open"));
+    nav.querySelectorAll(".nav-link").forEach(a => a.addEventListener("click", () => nav.classList.remove("mobile-open")));
+  }
+}
+
+function initScrollNav() {
+  const nav = document.getElementById("mainNav");
+  if (nav) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 40) nav.classList.add("scrolled");
+      else nav.classList.remove("scrolled");
+    });
+  }
+}
+
 function initCvDownload() {
-  const cvButtons = document.querySelectorAll('[data-action="download-cv"]');
-  cvButtons.forEach(btn => {
+  const btn = document.getElementById("cvDownloadBtn");
+  if (btn) {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
-
-      // Create structured text resume content
-      const resumeContent = `
-============================================================
-ADRIAN PRATAMA - CURRICULUM VITAE
-Senior Software Engineer & Lead UI Architect
-Lokasi: Jakarta, Indonesia | Email: adrian.pratama@domain.com
-============================================================
-
-RINGKASAN PROFESIONAL:
-Software Engineer dan Creative Technologist berpengalaman 8+ tahun
-dalam membangun sistem web enterprise skala besar, arsitektur UI presisi,
-dan aplikasi berbasis cloud. Berfokus pada sistem monokromatis berkinerja tinggi,
-standarisasi rekam medis (SIMRS), dan platform finansial (FinTech).
-
-RIWAYAT PEKERJAAN:
-1. Lead UI Architect & Principal Engineer — Artha Cipta Solusi (2022 - Sekarang)
-   - Memimpin arsitektur sistem informasi rumah sakit (SIMRS) di 14 rumah sakit rujukan.
-   - Mengurangi waktu muat dashboard klinis sebesar 64% dengan optimasi core CSS & SSR.
-2. Senior Frontend & Systems Engineer — FinTech Nusantara Corp (2020 - 2022)
-   - Merancang visualisasi data portofolio multi-aset dengan throughput tinggi.
-3. Fullstack Web Developer — Studio Ruang Digital (2017 - 2020)
-   - Mengembangkan 30+ proyek web editorial, portal interaktif, dan web arsitektur.
-
-PENDIDIKAN & SERTIFIKASI:
-- Sarjana Ilmu Komputer (S.Kom), Universitas Indonesia (IPK 3.84)
-- AWS Certified Solutions Architect - Associate
-- Google Cloud Certified Professional Cloud Developer
-- Nielsen Norman Group UX Master Certified
-
-KEAHLIAN UTAMA:
-- Bahasa: TypeScript, JavaScript (ESNext), Go (Golang), Python, SQL, HTML5/CSS3
-- Framework & Tools: React, Next.js, Node.js, Docker, Kubernetes, PostgreSQL, Redis, Figma
-- Konsep: High-Contrast Editorial UI, Clean Architecture, CI/CD, Micro-frontends
-
-============================================================
-      `.trim();
-
-      const blob = new Blob([resumeContent], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const tempLink = document.createElement("a");
-      tempLink.href = url;
-      tempLink.setAttribute("download", "CV_Adrian_Pratama_Lead_Architect.txt");
-      document.body.appendChild(tempLink);
-      tempLink.click();
-      document.body.removeChild(tempLink);
-      URL.revokeObjectURL(url);
-
-      showToast("CV resmi berhasil diunduh (Format CV_Adrian_Pratama.txt)!");
-    });
-  });
-}
-
-// 7. Navigation Scroll Highlight & Smooth Scroll
-function initScrollNav() {
-  const sections = document.querySelectorAll("section[id]");
-  const navLinks = document.querySelectorAll(".nav-link");
-
-  window.addEventListener("scroll", () => {
-    let currentId = "";
-    const scrollY = window.pageYOffset;
-
-    sections.forEach(section => {
-      const sectionHeight = section.offsetHeight;
-      const sectionTop = section.offsetTop - 120;
-      const sectionId = section.getAttribute("id");
-
-      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-        currentId = sectionId;
-      }
-    });
-
-    navLinks.forEach(link => {
-      link.classList.remove("active");
-      if (link.getAttribute("href") === `#${currentId}`) {
-        link.classList.add("active");
-      }
-    });
-  });
-}
-
-// 8. Mobile Navigation Toggle
-function initMobileMenu() {
-  const mobileBtn = document.getElementById("mobileMenuBtn");
-  const navLinks = document.getElementById("navLinks");
-
-  if (mobileBtn && navLinks) {
-    mobileBtn.addEventListener("click", () => {
-      navLinks.classList.toggle("mobile-open");
-      const isOpen = navLinks.classList.contains("mobile-open");
-      mobileBtn.textContent = isOpen ? "[TUTUP]" : "[MENU]";
-    });
-
-    // Close menu on link click
-    navLinks.querySelectorAll(".nav-link").forEach(link => {
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("mobile-open");
-        mobileBtn.textContent = "[MENU]";
-      });
+      showToast("CV dalam format PDF akan segera tersedia.");
     });
   }
-}
-
-// 9. Toast Notification System
-function showToast(message) {
-  let toast = document.getElementById("appToast");
-  if (!toast) {
-    toast = document.createElement("div");
-    toast.id = "appToast";
-    toast.className = "toast-notice";
-    document.body.appendChild(toast);
-  }
-
-  toast.textContent = message;
-  toast.classList.add("show");
-
-  clearTimeout(window.toastTimer);
-  window.toastTimer = setTimeout(() => {
-    toast.classList.remove("show");
-  }, 3500);
 }
