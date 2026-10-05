@@ -378,6 +378,25 @@ function initScrollNav() {
       else nav.classList.remove("scrolled");
     });
   }
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav-link");
+  if (!sections.length || !navLinks.length) return;
+  function setActiveLink() {
+    const scrollY = window.scrollY + 120;
+    sections.forEach((sec) => {
+      const top = sec.offsetTop;
+      const height = sec.offsetHeight;
+      const id = sec.getAttribute("id");
+      if (scrollY >= top && scrollY < top + height) {
+        navLinks.forEach((l) => l.classList.remove("active"));
+        const active = document.querySelector(`.nav-link[href="#${id}"]`);
+        if (active) active.classList.add("active");
+      }
+    });
+  }
+  window.addEventListener("scroll", setActiveLink);
+  window.addEventListener("load", setActiveLink);
+  setActiveLink();
 }
 
 function initCvDownload() {
