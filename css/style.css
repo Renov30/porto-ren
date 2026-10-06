@@ -341,7 +341,7 @@ select {
   font-family: var(--font-display);
   font-size: clamp(3.8rem, 11.5vw, 11rem);
   font-weight: 900;
-  line-height: 0.88;
+  line-height: 1.2;
   letter-spacing: -0.05em;
   color: var(--text-primary);
   text-transform: capitalize;
@@ -1572,6 +1572,7 @@ select {
   .theme-toggle-btn:not(.mobile-theme-btn) {
     display: none !important;
   }
+
   #mobileThemeBtn,
   .mobile-theme-btn {
     display: block !important;
