@@ -365,7 +365,40 @@ function initMobileMenu() {
   const btn = document.getElementById("mobileMenuBtn");
   const nav = document.getElementById("navLinks");
   if (btn && nav) {
-    btn.addEventListener("click", () => nav.classList.toggle("mobile-open"));
+    btn.addEventListener("click", () => {
+      const isOpen = nav.classList.toggle("mobile-open");
+      if (isOpen) {
+        let themeMobile = document.getElementById("mobileThemeBtn");
+        if (!themeMobile) {
+          themeMobile = document.createElement("button");
+          themeMobile.id = "mobileThemeBtn";
+          themeMobile.className = "theme-toggle-btn mobile-theme-btn";
+          themeMobile.setAttribute("aria-label", "Ganti Tema Tampilan");
+          const themeBtn = document.getElementById("themeToggleBtn");
+          themeMobile.textContent = themeBtn ? themeBtn.textContent : ((document.documentElement.getAttribute("data-theme") === "dark") ? "[TEMA: GELAP]" : "[TEMA: TERANG]");
+          themeMobile.addEventListener("click", () => {
+            if (themeBtn) themeBtn.click();
+            setTimeout(() => {
+              const tb = document.getElementById("themeToggleBtn");
+              if (tb) themeMobile.textContent = tb.textContent;
+            }, 0);
+          });
+          nav.appendChild(themeMobile);
+        } else {
+          const themeBtn = document.getElementById("themeToggleBtn");
+          themeMobile.textContent = themeBtn ? themeBtn.textContent : themeMobile.textContent;
+        }
+        let emailMobile = document.getElementById("mobileEmailLink");
+        if (!emailMobile) {
+          emailMobile = document.createElement("a");
+          emailMobile.id = "mobileEmailLink";
+          emailMobile.href = "#kontak";
+          emailMobile.className = "nav-cta-btn";
+          emailMobile.textContent = "halo@adrianpratama.id";
+          nav.appendChild(emailMobile);
+        }
+      }
+    });
     nav.querySelectorAll(".nav-link").forEach(a => a.addEventListener("click", () => nav.classList.remove("mobile-open")));
   }
 }

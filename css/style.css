@@ -1565,6 +1565,20 @@ select {
     display: block;
   }
 
+  .nav-email-desktop {
+    display: none;
+  }
+
+  .theme-toggle-btn:not(.mobile-theme-btn) {
+    display: none !important;
+  }
+  #mobileThemeBtn,
+  .mobile-theme-btn {
+    display: block !important;
+    align-self: center;
+    margin: 0.5rem auto 0;
+  }
+
   .projects-grid {
     grid-template-columns: 1fr;
   }
