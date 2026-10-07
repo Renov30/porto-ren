@@ -394,7 +394,7 @@ function initMobileMenu() {
           emailMobile.id = "mobileEmailLink";
           emailMobile.href = "#kontak";
           emailMobile.className = "nav-cta-btn";
-          emailMobile.textContent = "halo@adrianpratama.id";
+          emailMobile.textContent = "ermiawann@gmail.com";
           nav.appendChild(emailMobile);
         }
       }
