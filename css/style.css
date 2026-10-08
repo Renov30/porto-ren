@@ -382,7 +382,7 @@ select {
   left: 50%;
   transform: translateX(-50%) translateY(var(--parallax-portrait-y, 0px));
   width: min(390px, 70vw);
-  height: 94%;
+  height: 100%;
   max-height: 520px;
   z-index: 2;
   pointer-events: none;
