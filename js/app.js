@@ -534,8 +534,8 @@ function initHeroParallax() {
     if (scrollY <= heroHeight + 80) {
       // Subtle editorial parallax ratio:
       // Text shifts slightly down (+0.14) giving depth, portrait shifts slightly up (-0.06)
-      const textOffset = scrollY * 0.14;
-      const portraitOffset = scrollY * -0.06;
+      const textOffset = scrollY * 0.11;
+      const portraitOffset = scrollY * -0.05;
 
       typo.style.setProperty("--parallax-text-y", `${textOffset.toFixed(1)}px`);
       portrait.style.setProperty("--parallax-portrait-y", `${portraitOffset.toFixed(1)}px`);
