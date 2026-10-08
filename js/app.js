@@ -150,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollNav();
   initCvDownload();
   initScrollReveal();
+  initHeroParallax();
 });
 
 // 1. Theme Switcher
@@ -512,4 +513,43 @@ function initScrollReveal() {
 
   observeElements();
   window.reobserveScrollReveal = observeElements;
+}
+
+// 7. Subtle Hero Parallax on Scroll
+function initHeroParallax() {
+  const typo = document.querySelector(".hero-typography-layer");
+  const portrait = document.querySelector(".hero-portrait-wrapper");
+  const heroSection = document.querySelector(".hero-section");
+
+  if (!typo || !portrait || !heroSection) return;
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  let ticking = false;
+
+  function onScroll() {
+    const scrollY = window.scrollY;
+    const heroHeight = heroSection.offsetHeight || 800;
+
+    if (scrollY <= heroHeight + 80) {
+      // Subtle editorial parallax ratio:
+      // Text shifts slightly down (+0.14) giving depth, portrait shifts slightly up (-0.06)
+      const textOffset = scrollY * 0.14;
+      const portraitOffset = scrollY * -0.06;
+
+      typo.style.setProperty("--parallax-text-y", `${textOffset.toFixed(1)}px`);
+      portrait.style.setProperty("--parallax-portrait-y", `${portraitOffset.toFixed(1)}px`);
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      window.requestAnimationFrame(onScroll);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  onScroll();
 }

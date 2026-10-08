@@ -337,6 +337,8 @@ select {
   position: relative;
   cursor: default;
   pointer-events: none;
+  transform: translateY(var(--parallax-text-y, 0px));
+  will-change: transform;
 }
 
 .hero-title-solid {
@@ -378,7 +380,7 @@ select {
   position: absolute;
   bottom: -15px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(var(--parallax-portrait-y, 0px));
   width: min(390px, 70vw);
   height: 94%;
   max-height: 520px;
@@ -388,6 +390,7 @@ select {
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  will-change: transform;
 }
 
 .hero-portrait-img {
