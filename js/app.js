@@ -151,6 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initCvDownload();
   initScrollReveal();
   initHeroParallax();
+  initBackToTop();
 });
 
 // 1. Theme Switcher
@@ -561,4 +562,18 @@ function initHeroParallax() {
   }, { passive: true });
 
   onScroll();
+}
+
+// 8. Back to Top Smooth Scrolling
+function initBackToTop() {
+  const backToTopButtons = document.querySelectorAll(".footer-back-to-top");
+  backToTopButtons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  });
 }
