@@ -152,6 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollReveal();
   initHeroParallax();
   initBackToTop();
+  initHeroPortraitToggle();
 });
 
 // 1. Theme Switcher
@@ -544,8 +545,8 @@ function initHeroParallax() {
     if (scrollY <= heroHeight + 80) {
       // Subtle editorial parallax ratio:
       // Text shifts slightly down (+0.14) giving depth, portrait shifts slightly up (-0.06)
-      const textOffset = scrollY * 0.11;
-      const portraitOffset = scrollY * -0.05;
+      const textOffset = scrollY * 0.14;
+      const portraitOffset = scrollY * -0.07;
 
       typo.style.setProperty("--parallax-text-y", `${textOffset.toFixed(1)}px`);
       portrait.style.setProperty("--parallax-portrait-y", `${portraitOffset.toFixed(1)}px`);
@@ -575,5 +576,53 @@ function initBackToTop() {
         behavior: "smooth"
       });
     });
+  });
+}
+
+// 9. Hero Portrait Click Dim & Blur Toggle
+function initHeroPortraitToggle() {
+  const centerStage = document.querySelector(".hero-center-stage");
+  const textSpans = document.querySelectorAll(".hero-title-text");
+  const portraitImg = document.querySelector(".hero-portrait-img");
+
+  if (!centerStage || !textSpans.length) return;
+
+  // Clear entrance keyframe after finish so transitions remain 100% fluid
+  if (portraitImg) {
+    portraitImg.addEventListener("animationend", () => {
+      portraitImg.style.animation = "none";
+    }, { once: true });
+  }
+
+  function toggleDimmed(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    centerStage.classList.toggle("portrait-dimmed");
+  }
+
+  textSpans.forEach((span) => {
+    span.addEventListener("click", toggleDimmed);
+    span.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleDimmed(e);
+      }
+    });
+  });
+
+  // Clicking anywhere on center stage while dimmed restores the portrait
+  centerStage.addEventListener("click", (e) => {
+    if (centerStage.classList.contains("portrait-dimmed")) {
+      centerStage.classList.remove("portrait-dimmed");
+    }
+  });
+
+  // Clicking outside center stage while dimmed also restores the portrait
+  document.addEventListener("click", (e) => {
+    if (!centerStage.contains(e.target) && centerStage.classList.contains("portrait-dimmed")) {
+      centerStage.classList.remove("portrait-dimmed");
+    }
   });
 }
