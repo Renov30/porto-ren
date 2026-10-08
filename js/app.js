@@ -149,6 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileMenu();
   initScrollNav();
   initCvDownload();
+  initScrollReveal();
 });
 
 // 1. Theme Switcher
@@ -256,6 +257,9 @@ function renderProjects(filterCategory = "all") {
       }
     });
   });
+  if (typeof window.reobserveScrollReveal === "function") {
+    window.reobserveScrollReveal();
+  }
 }
 
 // 3. Filters
@@ -440,4 +444,72 @@ function initCvDownload() {
       showToast("CV dalam format PDF akan segera tersedia.");
     });
   }
+}
+
+// 6. Subtle Editorial Scroll Reveal Animation
+function initScrollReveal() {
+  document.documentElement.classList.add("js-ready");
+
+  if (!("IntersectionObserver" in window)) {
+    document.querySelectorAll(".reveal-on-scroll").forEach(el => el.classList.add("is-revealed"));
+    return;
+  }
+
+  const selectors = [
+    ".section-header",
+    ".metric-card",
+    ".about-main-text",
+    ".about-philosophy-box",
+    ".value-card",
+    ".side-card",
+    ".portfolio-filter-bar",
+    ".project-card",
+    ".timeline-item",
+    ".skill-category-box",
+    ".contact-info-panel",
+    ".contact-form-panel"
+  ];
+
+  const observerOptions = {
+    root: null,
+    rootMargin: "0px 0px -30px 0px",
+    threshold: 0.08
+  };
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-revealed");
+        obs.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  function observeElements() {
+    document.querySelectorAll(selectors.join(", ")).forEach(el => {
+      if (!el.classList.contains("reveal-on-scroll")) {
+        el.classList.add("reveal-on-scroll");
+
+        // Subtle stagger effect for children within lists or grids
+        const parent = el.parentElement;
+        if (parent && (
+          parent.classList.contains("metrics-grid") ||
+          parent.classList.contains("projects-grid") ||
+          parent.classList.contains("timeline-list") ||
+          parent.classList.contains("values-grid")
+        )) {
+          const siblingIndex = Array.from(parent.children).indexOf(el);
+          if (siblingIndex > 0) {
+            const delay = Math.min(siblingIndex * 0.07, 0.4).toFixed(2);
+            el.style.transitionDelay = `${delay}s`;
+          }
+        }
+
+        observer.observe(el);
+      }
+    });
+  }
+
+  observeElements();
+  window.reobserveScrollReveal = observeElements;
 }
