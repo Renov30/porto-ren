@@ -371,7 +371,8 @@ select {
   height: 94%;
   max-height: 520px;
   z-index: 2;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -384,7 +385,14 @@ select {
   object-fit: contain;
   object-position: bottom center;
   display: block;
-  filter: contrast(106%) brightness(99%);
+  pointer-events: auto;
+  filter: grayscale(100%) contrast(105%);
+  transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-portrait-wrapper:hover .hero-portrait-img,
+.hero-portrait-img:hover {
+  filter: grayscale(0%) contrast(100%);
 }
 
 /* Hero Bottom Row: Location, Action Buttons, Clients */
