@@ -424,6 +424,8 @@ select {
 .hero-typography-layer:hover ~ .hero-portrait-wrapper .hero-portrait-img {
   opacity: 0.90;
   filter: grayscale(100%) contrast(105%) blur(4px);
+  transition-delay: 0.8s;
+  transition-duration: 1.2s;
 }
 
 /* Hero Bottom Row: Location, Action Buttons, Clients */
