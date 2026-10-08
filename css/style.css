@@ -335,6 +335,7 @@ select {
   user-select: none;
   z-index: 1;
   position: relative;
+  cursor: default;
 }
 
 .hero-title-solid {
@@ -386,13 +387,30 @@ select {
   object-position: bottom center;
   display: block;
   pointer-events: auto;
-  filter: grayscale(100%) contrast(105%);
-  transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  filter: grayscale(100%) contrast(105%) blur(0px);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: filter, opacity;
 }
 
+/* 1. Hover langsung pada foto portrait: tampilkan warna asli foto */
 .hero-portrait-wrapper:hover .hero-portrait-img,
 .hero-portrait-img:hover {
-  filter: grayscale(0%) contrast(100%);
+  filter: grayscale(0%) contrast(100%) blur(0px);
+}
+
+/* 2. Hover pada teks tipografi ("Programmer & Video Editor") di belakang foto:
+      turunkan opasitas dan berikan efek blur agar teks di baliknya terlihat jelas */
+.hero-typography-layer:hover ~ .hero-portrait-wrapper {
+  pointer-events: none;
+}
+
+.hero-typography-layer:hover ~ .hero-portrait-wrapper .hero-portrait-img,
+.hero-center-stage:has(.hero-typography-layer:hover) .hero-portrait-img {
+  opacity: 0.93;
+  filter: grayscale(100%) contrast(105%) blur(4px);
 }
 
 /* Hero Bottom Row: Location, Action Buttons, Clients */
