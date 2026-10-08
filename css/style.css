@@ -1638,6 +1638,424 @@ html.js-ready .reveal-on-scroll.is-revealed {
 }
 
 /* ==========================================================================
+   RATE CARD & MEDIA KIT PAGE (Editorial Design)
+   ========================================================================== */
+.rate-card-page {
+  padding-top: calc(var(--nav-height) + 2.5rem);
+  padding-bottom: 6rem;
+}
+
+.rate-hero-badge-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.rate-back-btn {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 0.4rem 0.85rem;
+  border-radius: 4px;
+  background-color: var(--bg-secondary);
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+}
+
+.rate-back-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-dark);
+}
+
+.rate-audience-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.rate-audience-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.rate-audience-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.rate-audience-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Analytics Cards */
+.analytics-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.analytics-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform var(--transition-smooth), border-color var(--transition-fast);
+}
+
+.analytics-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-dark);
+}
+
+.analytics-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.analytics-platform-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.analytics-handle {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.analytics-stat-pair {
+  margin-bottom: 1.25rem;
+}
+
+.analytics-big-number {
+  font-family: var(--font-display);
+  font-size: 2.75rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.analytics-stat-sub {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.analytics-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+/* Aggregated Banner */
+.analytics-aggregate-banner {
+  background-color: var(--bg-secondary);
+  border: 2px solid var(--border-dark);
+  padding: 1.75rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 5rem;
+}
+
+.analytics-aggregate-number {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.analytics-aggregate-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Pricing Grid */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.pricing-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 2.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform var(--transition-smooth), border-color var(--transition-fast);
+}
+
+.pricing-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-dark);
+}
+
+.pricing-card.featured {
+  border: 2px solid var(--border-dark);
+  background-color: var(--bg-secondary);
+}
+
+.pricing-featured-badge {
+  position: absolute;
+  top: -12px;
+  right: 1.5rem;
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  font-family: var(--font-mono);
+  font-size: 0.725rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pricing-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.pricing-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+
+.pricing-price-box {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pricing-price-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.pricing-price {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.pricing-price-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+.pricing-features-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.pricing-feature-item {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  line-height: 1.45;
+}
+
+.pricing-feature-bullet {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.btn-pricing-book {
+  display: block;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 800;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid var(--border-dark);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-pricing-book:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.btn-pricing-outline {
+  display: block;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 800;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid var(--border-dark);
+  background-color: transparent;
+  color: var(--text-primary);
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-pricing-outline:hover {
+  background-color: var(--border-dark);
+  color: var(--btn-primary-text);
+  transform: translateY(-2px);
+}
+
+/* Bundle Banner */
+.bundle-card {
+  border: 2px solid var(--border-dark);
+  background-color: var(--bg-card);
+  padding: 2.5rem;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 5rem;
+}
+
+/* Workflow Grid */
+.workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 5rem;
+}
+
+.workflow-card {
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  padding: 1.75rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.workflow-step {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  border-bottom: 2px solid var(--border-dark);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.workflow-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.workflow-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* Terms Grid */
+.terms-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  margin-bottom: 5rem;
+}
+
+.terms-card {
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  padding: 2rem;
+}
+
+.terms-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.terms-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* Link from Index to Rate Card */
+.btn-rate-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--border-dark);
+  padding-bottom: 0.25rem;
+  margin-top: 1.25rem;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-rate-card-link:hover {
+  opacity: 0.8;
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
    RESPONSIVE DESIGN BREAKPOINTS
    ========================================================================== */
 @media (max-width: 1024px) {
@@ -1665,6 +2083,27 @@ html.js-ready .reveal-on-scroll.is-revealed {
 
   .testimonials-grid {
     grid-template-columns: 1fr;
+  }
+
+  .analytics-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .workflow-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .terms-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bundle-card {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }
 
@@ -1707,6 +2146,20 @@ html.js-ready .reveal-on-scroll.is-revealed {
 
   .projects-grid {
     grid-template-columns: 1fr;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .analytics-aggregate-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
 
   .values-grid {

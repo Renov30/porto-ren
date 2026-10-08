@@ -468,7 +468,12 @@ function initScrollReveal() {
     ".timeline-item",
     ".skill-category-box",
     ".contact-info-panel",
-    ".contact-form-panel"
+    ".contact-form-panel",
+    ".analytics-card",
+    ".pricing-card",
+    ".bundle-card",
+    ".workflow-card",
+    ".terms-card"
   ];
 
   const observerOptions = {
@@ -497,7 +502,11 @@ function initScrollReveal() {
           parent.classList.contains("metrics-grid") ||
           parent.classList.contains("projects-grid") ||
           parent.classList.contains("timeline-list") ||
-          parent.classList.contains("values-grid")
+          parent.classList.contains("values-grid") ||
+          parent.classList.contains("analytics-cards-grid") ||
+          parent.classList.contains("pricing-grid") ||
+          parent.classList.contains("workflow-grid") ||
+          parent.classList.contains("terms-grid")
         )) {
           const siblingIndex = Array.from(parent.children).indexOf(el);
           if (siblingIndex > 0) {
