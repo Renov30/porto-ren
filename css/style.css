@@ -336,6 +336,7 @@ select {
   z-index: 1;
   position: relative;
   cursor: default;
+  pointer-events: none;
 }
 
 .hero-title-solid {
@@ -347,6 +348,7 @@ select {
   color: var(--text-primary);
   text-transform: capitalize;
   display: block;
+  pointer-events: none;
 }
 
 .hero-title-outlined {
@@ -360,6 +362,15 @@ select {
   text-transform: capitalize;
   display: block;
   margin-top: -0.04em;
+  pointer-events: none;
+}
+
+/* Span teks presisi: hanya area huruf yang menerima interaksi hover */
+.hero-title-text {
+  display: inline-block;
+  pointer-events: auto;
+  line-height: 0.88;
+  vertical-align: middle;
 }
 
 /* Portrait Image in Center Foreground */
@@ -401,15 +412,17 @@ select {
   filter: grayscale(0%) contrast(100%) blur(0px);
 }
 
-/* 2. Hover pada teks tipografi ("Programmer & Video Editor") di belakang foto:
-      turunkan opasitas dan berikan efek blur agar teks di baliknya terlihat jelas */
+/* 2. Hover presisi pada teks tipografi ("Programmer & Video Editor") di belakang foto:
+      turunkan opasitas dan berikan efek blur HANYA saat kursor benar-benar mengenai teks */
+.hero-typography-layer:has(.hero-title-text:hover) ~ .hero-portrait-wrapper,
 .hero-typography-layer:hover ~ .hero-portrait-wrapper {
   pointer-events: none;
 }
 
-.hero-typography-layer:hover ~ .hero-portrait-wrapper .hero-portrait-img,
-.hero-center-stage:has(.hero-typography-layer:hover) .hero-portrait-img {
-  opacity: 0.93;
+.hero-typography-layer:has(.hero-title-text:hover) ~ .hero-portrait-wrapper .hero-portrait-img,
+.hero-center-stage:has(.hero-title-text:hover) .hero-portrait-img,
+.hero-typography-layer:hover ~ .hero-portrait-wrapper .hero-portrait-img {
+  opacity: 0.90;
   filter: grayscale(100%) contrast(105%) blur(4px);
 }
 
