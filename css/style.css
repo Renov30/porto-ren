@@ -424,7 +424,7 @@ select {
 .hero-typography-layer:has(.hero-title-text:hover) ~ .hero-portrait-wrapper .hero-portrait-img,
 .hero-center-stage:has(.hero-title-text:hover) .hero-portrait-img,
 .hero-typography-layer:hover ~ .hero-portrait-wrapper .hero-portrait-img {
-  opacity: 0.90;
+  opacity: 0.90 !important;
   filter: grayscale(100%) contrast(105%) blur(4px);
   transition-delay: 1s;
   transition-duration: 1.2s;
@@ -1634,6 +1634,148 @@ html.js-ready .reveal-on-scroll.is-revealed {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   PAGE ENTRANCE ANIMATIONS (Editorial Load Choreography)
+   ========================================================================== */
+
+/* Keyframes */
+@keyframes navSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroRevealUp {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroPortraitEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(36px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 1. Header Navigation Entrance */
+.header {
+  animation: navSlideDown 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+  will-change: opacity, transform;
+}
+
+/* 2. Index Page: Hero Section Choreography */
+.hero-intro-text {
+  animation: heroRevealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+  will-change: opacity, transform;
+}
+
+.hero-title-solid {
+  animation: heroRevealUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+  will-change: opacity, transform;
+}
+
+.hero-title-outlined {
+  animation: heroRevealUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.34s both;
+  will-change: opacity, transform;
+}
+
+.hero-portrait-img {
+  animation: heroPortraitEnter 1s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+  will-change: opacity, transform;
+}
+
+.hero-location-text {
+  animation: heroRevealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.44s both;
+  will-change: opacity, transform;
+}
+
+.hero-cta-group {
+  animation: heroRevealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.52s both;
+  will-change: opacity, transform;
+}
+
+.hero-clients-block {
+  animation: heroRevealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.60s both;
+  will-change: opacity, transform;
+}
+
+/* 3. Rate Card Page: Hero Section Choreography */
+.rate-card-page .rate-hero-badge-wrap {
+  animation: heroRevealUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+  will-change: opacity, transform;
+}
+
+.rate-card-page > .container > .section-title,
+.rate-hero-title {
+  animation: heroRevealUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+  will-change: opacity, transform;
+}
+
+.rate-card-page > .container > .section-subtitle,
+.rate-hero-subtitle {
+  animation: heroRevealUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both;
+  will-change: opacity, transform;
+}
+
+.rate-card-page .rate-audience-meta {
+  animation: heroRevealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both;
+  will-change: opacity, transform;
+}
+
+.rate-card-page .rate-audience-item:nth-child(1) {
+  animation: heroRevealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.48s both;
+}
+
+.rate-card-page .rate-audience-item:nth-child(2) {
+  animation: heroRevealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.56s both;
+}
+
+.rate-card-page .rate-audience-item:nth-child(3) {
+  animation: heroRevealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.64s both;
+}
+
+.rate-card-page .rate-audience-item:nth-child(4) {
+  animation: heroRevealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s both;
+}
+
+/* Reduced Motion Override for Entrance Animations */
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .hero-intro-text,
+  .hero-title-solid,
+  .hero-title-outlined,
+  .hero-portrait-img,
+  .hero-location-text,
+  .hero-cta-group,
+  .hero-clients-block,
+  .rate-card-page .rate-hero-badge-wrap,
+  .rate-card-page > .container > .section-title,
+  .rate-hero-title,
+  .rate-card-page > .container > .section-subtitle,
+  .rate-hero-subtitle,
+  .rate-card-page .rate-audience-meta,
+  .rate-card-page .rate-audience-item {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
