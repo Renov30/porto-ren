@@ -495,6 +495,9 @@ function initScrollReveal() {
 
   function observeElements() {
     document.querySelectorAll(selectors.join(", ")).forEach(el => {
+      // Elements in #statistik have their own page open entrance animation
+      if (el.closest("#statistik")) return;
+
       if (!el.classList.contains("reveal-on-scroll")) {
         el.classList.add("reveal-on-scroll");
 

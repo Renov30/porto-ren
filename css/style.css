@@ -1764,6 +1764,32 @@ html.js-ready .reveal-on-scroll.is-revealed {
   animation: heroRevealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s both;
 }
 
+/* 4. Rate Card Page: Section 01 (Statistik Terverifikasi) Entrance */
+#statistik .section-header {
+  animation: heroRevealUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.78s both !important;
+  will-change: opacity, transform;
+}
+
+#statistik .analytics-card:nth-child(1) {
+  animation: heroRevealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.90s both !important;
+  will-change: opacity, transform;
+}
+
+#statistik .analytics-card:nth-child(2) {
+  animation: heroRevealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.98s both !important;
+  will-change: opacity, transform;
+}
+
+#statistik .analytics-card:nth-child(3) {
+  animation: heroRevealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.06s both !important;
+  will-change: opacity, transform;
+}
+
+#statistik .analytics-aggregate-banner {
+  animation: heroRevealUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 1.14s both !important;
+  will-change: opacity, transform;
+}
+
 /* Reduced Motion Override for Entrance Animations */
 @media (prefers-reduced-motion: reduce) {
   .header,
@@ -1780,7 +1806,10 @@ html.js-ready .reveal-on-scroll.is-revealed {
   .rate-card-page > .container > .section-subtitle,
   .rate-hero-subtitle,
   .rate-card-page .rate-audience-meta,
-  .rate-card-page .rate-audience-item {
+  .rate-card-page .rate-audience-item,
+  #statistik .section-header,
+  #statistik .analytics-card,
+  #statistik .analytics-aggregate-banner {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
