@@ -619,19 +619,19 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="senderName" class="form-label">Nama Lengkap</label>
-                <input type="text" id="senderName" class="form-input" placeholder="Misal: Budi Santoso" required>
+                <input type="text" id="senderName" name="name" class="form-input" placeholder="Misal: Budi Santoso" required>
               </div>
 
               <div class="form-group">
                 <label for="senderEmail" class="form-label">Alamat Email Resmi</label>
-                <input type="email" id="senderEmail" class="form-input" placeholder="budi@perusahaan.com" required>
+                <input type="email" id="senderEmail" name="email" class="form-input" placeholder="budi@perusahaan.com" required>
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
                 <label for="msgSubject" class="form-label">Topik Kebutuhan</label>
-                <select id="msgSubject" class="form-select">
+                <select id="msgSubject" name="subject" class="form-select">
                   <option value="Pengembangan Website & Aplikasi Web">Pengembangan Website &amp; Aplikasi Web</option>
                   <option value="Modifikasi & Implementasi SIMRS">Modifikasi &amp; Implementasi SIMRS</option>
                   <option value="Video Editing & Content Creation">Video Editing &amp; Content Creation</option>
@@ -642,7 +642,7 @@
 
               <div class="form-group">
                 <label for="budgetRange" class="form-label">Estimasi Anggaran</label>
-                <select id="budgetRange" class="form-select">
+                <select id="budgetRange" name="budget" class="form-select">
                   <option value="Di bawah Rp 5 Juta">&lt; Rp 5 Juta</option>
                   <option value="Rp 5 Juta - Rp 15 Juta">Rp 5 Juta &mdash; Rp 15 Juta</option>
                   <option value="Rp 15 Juta - Rp 30 Juta">Rp 15 Juta &mdash; Rp 30 Juta</option>
@@ -653,7 +653,7 @@
 
             <div class="form-group">
               <label for="senderMessage" class="form-label">Rincian Kebutuhan Proyek</label>
-              <textarea id="senderMessage" class="form-textarea"
+              <textarea id="senderMessage" name="message" class="form-textarea"
                 placeholder="Jelaskan gambaran proyek, target waktu, dan ruang lingkup pekerjaan yang ingin Anda selesaikan..."
                 required></textarea>
             </div>

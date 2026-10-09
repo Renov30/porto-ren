@@ -146,6 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initProjectFilters();
   initModals();
   initContactForm();
+  initRateCardForm();
   initMobileMenu();
   initScrollNav();
   initCvDownload();
@@ -340,31 +341,190 @@ function closeModal() {
   }
 }
 
-// 5. Contact Form
+// 5. Contact Form Handler (FormSubmit AJAX -> ermiawann@gmail.com)
 function initContactForm() {
   const form = document.getElementById("contactForm");
   if (!form) return;
-  form.addEventListener("submit", (e) => {
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
     const name = document.getElementById("senderName").value.trim();
     const email = document.getElementById("senderEmail").value.trim();
+    const subject = document.getElementById("msgSubject") ? document.getElementById("msgSubject").value : "Pertanyaan Umum";
+    const budget = document.getElementById("budgetRange") ? document.getElementById("budgetRange").value : "-";
     const message = document.getElementById("senderMessage").value.trim();
+
     if (!name || !email || !message) {
       showToast("Harap lengkapi semua kolom yang wajib diisi!");
       return;
     }
-    showToast("Pesan berhasil dikirim! Terima kasih, saya akan merespons secepat mungkin.");
-    form.reset();
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn ? submitBtn.innerHTML : "KIRIM PESAN SEKARANG &mdash;&gt;";
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = "[MENGIRIMKAN PESAN...]";
+    }
+
+    if (window.location.protocol === "file:") {
+      showToast("Perhatian: Formulir online memerlukan web server (uji via localhost atau langsung di GitHub Pages).");
+    }
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/ermiawann@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          _replyto: email,
+          _subject: `[Portofolio] Pesan Baru dari ${name}: ${subject}`,
+          "Nama Pengirim": name,
+          "Email Pengirim": email,
+          "Topik Kebutuhan": subject,
+          "Estimasi Anggaran": budget,
+          "Rincian Proyek": message,
+          _template: "table",
+          _captcha: "false"
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && (data.success === "true" || data.success === true)) {
+        showToast("Pesan berhasil terkirim langsung ke email! Terima kasih.");
+        form.reset();
+      } else if (data.message && data.message.toLowerCase().includes("activation")) {
+        showToast("Formulir butuh aktivasi: Cek email aktivasi di inbox/spam ermiawann@gmail.com.");
+      } else if (data.message && data.message.toLowerCase().includes("web server")) {
+        showToast("FormSubmit memerlukan web server. Uji via localhost atau langsung di GitHub Pages.");
+      } else {
+        showToast(data.message || "Pesan terkirim! Terima kasih.");
+        form.reset();
+      }
+    } catch (err) {
+      console.error("Gagal mengirim pesan:", err);
+      showToast("Gagal mengirim pesan. Silakan hubungi langsung ke ermiawann@gmail.com");
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+    }
   });
 }
 
-// Toast
+// 5b. Rate Card Booking Form & Package Auto-Select (FormSubmit AJAX -> ermiawann@gmail.com)
+function initRateCardForm() {
+  // Package Selector Auto-Select
+  const packageSelect = document.getElementById("selectedPackage");
+  const bookButtons = document.querySelectorAll("[data-package]");
+
+  if (packageSelect && bookButtons.length) {
+    bookButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const pkgName = btn.getAttribute("data-package");
+        if (pkgName) {
+          for (let i = 0; i < packageSelect.options.length; i++) {
+            if (packageSelect.options[i].value.toLowerCase().includes(pkgName.toLowerCase())) {
+              packageSelect.selectedIndex = i;
+              break;
+            }
+          }
+        }
+      });
+    });
+  }
+
+  // Booking Form Submission
+  const form = document.getElementById("rateCardBookingForm");
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const brand = document.getElementById("brandName").value.trim();
+    const email = document.getElementById("brandEmail").value.trim();
+    const pkg = document.getElementById("selectedPackage") ? document.getElementById("selectedPackage").value : "-";
+    const targetDate = document.getElementById("targetDate") ? document.getElementById("targetDate").value.trim() || "Fleksibel" : "Fleksibel";
+    const brief = document.getElementById("campaignBrief").value.trim();
+
+    if (!brand || !email || !brief) {
+      showToast("Harap lengkapi semua kolom yang wajib diisi!");
+      return;
+    }
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn ? submitBtn.innerHTML : "KIRIMKAN FORMULIR PENAWARAN &mdash;&gt;";
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = "[MENGIRIMKAN PENAWARAN...]";
+    }
+
+    if (window.location.protocol === "file:") {
+      showToast("Perhatian: Formulir online memerlukan web server (uji via localhost atau langsung di GitHub Pages).");
+    }
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/ermiawann@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          name: brand,
+          email: email,
+          _replyto: email,
+          _subject: `[Rate Card] Penawaran Kolaborasi dari ${brand} (${pkg})`,
+          "Nama Brand / Perusahaan": brand,
+          "Email Resmi": email,
+          "Pilihan Paket Promosi": pkg,
+          "Target Tanggal Tayang": targetDate,
+          "Brief Kampanye": brief,
+          _template: "table",
+          _captcha: "false"
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && (data.success === "true" || data.success === true)) {
+        showToast("Formulir penawaran berhasil terkirim ke email! Kami akan segera menghubungi Anda.");
+        form.reset();
+      } else if (data.message && data.message.toLowerCase().includes("activation")) {
+        showToast("Formulir butuh aktivasi: Cek email aktivasi di inbox/spam ermiawann@gmail.com.");
+      } else if (data.message && data.message.toLowerCase().includes("web server")) {
+        showToast("FormSubmit memerlukan web server. Uji via localhost atau langsung di GitHub Pages.");
+      } else {
+        showToast(data.message || "Formulir penawaran terkirim! Terima kasih.");
+        form.reset();
+      }
+    } catch (err) {
+      console.error("Gagal mengirim penawaran:", err);
+      showToast("Gagal mengirim penawaran. Silakan hubungi langsung ke ermiawann@gmail.com");
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+    }
+  });
+}
+
+// Toast Notification
 function showToast(msg) {
   const toast = document.getElementById("appToast");
   if (!toast) return;
   toast.textContent = msg;
   toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 2800);
+  setTimeout(() => toast.classList.remove("show"), 3500);
 }
 
 // Mobile menu, scroll nav, CV (minimal)

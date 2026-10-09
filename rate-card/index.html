@@ -610,19 +610,19 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="brandName" class="form-label">Nama Brand / Perusahaan</label>
-                <input type="text" id="brandName" class="form-input" placeholder="Misal: PT Teknologi Kreatif" required>
+                <input type="text" id="brandName" name="brand" class="form-input" placeholder="Misal: PT Teknologi Kreatif" required>
               </div>
 
               <div class="form-group">
                 <label for="brandEmail" class="form-label">Alamat Email Resmi</label>
-                <input type="email" id="brandEmail" class="form-input" placeholder="partnership@brandanda.com" required>
+                <input type="email" id="brandEmail" name="email" class="form-input" placeholder="partnership@brandanda.com" required>
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
                 <label for="selectedPackage" class="form-label">Pilihan Paket Promosi</label>
-                <select id="selectedPackage" class="form-select">
+                <select id="selectedPackage" name="package" class="form-select">
                   <option value="Short-Form Multi-Platform (Rp 750K)">Short-Form Multi-Platform (Reels, TikTok, Shorts) &mdash; Rp 750K</option>
                   <option value="Instagram Story Blast (Rp 350K)">Instagram Story Blast (2-3 Frames + Link) &mdash; Rp 350K</option>
                   <option value="YouTube Video Integration (Rp 1.5M)">YouTube Video Integration / Dedicated Review &mdash; Rp 1.5M</option>
@@ -635,13 +635,13 @@
 
               <div class="form-group">
                 <label for="targetDate" class="form-label">Target Tanggal Tayang</label>
-                <input type="text" id="targetDate" class="form-input" placeholder="Misal: Akhir Bulan Ini / Fleksibel">
+                <input type="text" id="targetDate" name="targetDate" class="form-input" placeholder="Misal: Akhir Bulan Ini / Fleksibel">
               </div>
             </div>
 
             <div class="form-group">
               <label for="campaignBrief" class="form-label">Gambaran Produk &amp; Objektif Singkat</label>
-              <textarea id="campaignBrief" class="form-textarea"
+              <textarea id="campaignBrief" name="brief" class="form-textarea"
                 placeholder="Ceritakan nama produk, tautan website/akun, pesan utama yang ingin disampaikan, atau permintaan khusus lainnya..."
                 required></textarea>
             </div>
@@ -686,53 +686,6 @@
 
   <!-- Application Script -->
   <script src="../js/app.js"></script>
-  <script>
-    // Rate card booking button auto-select package helper
-    document.addEventListener("DOMContentLoaded", () => {
-      const packageSelect = document.getElementById("selectedPackage");
-      const bookButtons = document.querySelectorAll("[data-package]");
-
-      bookButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
-          const pkgName = btn.getAttribute("data-package");
-          if (packageSelect && pkgName) {
-            for (let i = 0; i < packageSelect.options.length; i++) {
-              if (packageSelect.options[i].value.toLowerCase().includes(pkgName.toLowerCase())) {
-                packageSelect.selectedIndex = i;
-                break;
-              }
-            }
-          }
-        });
-      });
-
-      // Rate Card Form Handler
-      const rateForm = document.getElementById("rateCardBookingForm");
-      if (rateForm) {
-        rateForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const brand = document.getElementById("brandName").value.trim();
-          const email = document.getElementById("brandEmail").value.trim();
-          const pkg = document.getElementById("selectedPackage").value;
-          const brief = document.getElementById("campaignBrief").value.trim();
-
-          if (!brand || !email || !brief) {
-            if (typeof showToast === "function") {
-              showToast("Harap isi semua kolom yang wajib diisi!");
-            }
-            return;
-          }
-
-          if (typeof showToast === "function") {
-            showToast("Permintaan berhasil dikirim! Kami akan menghubungi Anda melalui surel.");
-          } else {
-            alert("Permintaan penawaran berhasil dikirim!");
-          }
-          rateForm.reset();
-        });
-      }
-    });
-  </script>
 </body>
 
 </html>

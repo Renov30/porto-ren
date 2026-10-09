@@ -1425,6 +1425,12 @@ select {
   transform: translateY(-1px);
 }
 
+.btn-form-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
 /* ==========================================================================
    FOOTER
    ========================================================================== */
