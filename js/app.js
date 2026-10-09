@@ -138,8 +138,8 @@ function setImgFallback(img) {
   };
 }
 
-// Document Ready Initialization
-document.addEventListener("DOMContentLoaded", () => {
+// Document Ready Initialization (Supports both loading and already-interactive DOM)
+function initApp() {
   initTheme();
   updateFilterCounts();
   renderProjects("all");
@@ -154,7 +154,13 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeroParallax();
   initBackToTop();
   initHeroPortraitToggle();
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initApp);
+} else {
+  initApp();
+}
 
 // 1. Theme Switcher
 function initTheme() {
@@ -346,18 +352,27 @@ function initContactForm() {
   const form = document.getElementById("contactForm");
   if (!form) return;
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  const handleContactSubmit = async (e) => {
+    if (e) {
+      if (typeof e.preventDefault === "function") e.preventDefault();
+      if (typeof e.stopPropagation === "function") e.stopPropagation();
+    }
 
-    const name = document.getElementById("senderName").value.trim();
-    const email = document.getElementById("senderEmail").value.trim();
-    const subject = document.getElementById("msgSubject") ? document.getElementById("msgSubject").value : "Pertanyaan Umum";
-    const budget = document.getElementById("budgetRange") ? document.getElementById("budgetRange").value : "-";
-    const message = document.getElementById("senderMessage").value.trim();
+    const nameEl = document.getElementById("senderName");
+    const emailEl = document.getElementById("senderEmail");
+    const subjectEl = document.getElementById("msgSubject");
+    const budgetEl = document.getElementById("budgetRange");
+    const messageEl = document.getElementById("senderMessage");
+
+    const name = nameEl ? nameEl.value.trim() : "";
+    const email = emailEl ? emailEl.value.trim() : "";
+    const subject = subjectEl ? subjectEl.value : "Pertanyaan Umum";
+    const budget = budgetEl ? budgetEl.value : "-";
+    const message = messageEl ? messageEl.value.trim() : "";
 
     if (!name || !email || !message) {
       showToast("Harap lengkapi semua kolom yang wajib diisi!");
-      return;
+      return false;
     }
 
     const submitBtn = form.querySelector('button[type="submit"]');
@@ -416,7 +431,12 @@ function initContactForm() {
         submitBtn.innerHTML = originalText;
       }
     }
-  });
+
+    return false;
+  };
+
+  form.onsubmit = handleContactSubmit;
+  form.addEventListener("submit", handleContactSubmit);
 }
 
 // 5b. Rate Card Booking Form & Package Auto-Select (FormSubmit AJAX -> ermiawann@gmail.com)
@@ -445,18 +465,27 @@ function initRateCardForm() {
   const form = document.getElementById("rateCardBookingForm");
   if (!form) return;
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  const handleBookingSubmit = async (e) => {
+    if (e) {
+      if (typeof e.preventDefault === "function") e.preventDefault();
+      if (typeof e.stopPropagation === "function") e.stopPropagation();
+    }
 
-    const brand = document.getElementById("brandName").value.trim();
-    const email = document.getElementById("brandEmail").value.trim();
-    const pkg = document.getElementById("selectedPackage") ? document.getElementById("selectedPackage").value : "-";
-    const targetDate = document.getElementById("targetDate") ? document.getElementById("targetDate").value.trim() || "Fleksibel" : "Fleksibel";
-    const brief = document.getElementById("campaignBrief").value.trim();
+    const brandEl = document.getElementById("brandName");
+    const emailEl = document.getElementById("brandEmail");
+    const pkgEl = document.getElementById("selectedPackage");
+    const targetDateEl = document.getElementById("targetDate");
+    const briefEl = document.getElementById("campaignBrief");
+
+    const brand = brandEl ? brandEl.value.trim() : "";
+    const email = emailEl ? emailEl.value.trim() : "";
+    const pkg = pkgEl ? pkgEl.value : "-";
+    const targetDate = (targetDateEl && targetDateEl.value.trim()) ? targetDateEl.value.trim() : "Fleksibel";
+    const brief = briefEl ? briefEl.value.trim() : "";
 
     if (!brand || !email || !brief) {
       showToast("Harap lengkapi semua kolom yang wajib diisi!");
-      return;
+      return false;
     }
 
     const submitBtn = form.querySelector('button[type="submit"]');
@@ -515,7 +544,12 @@ function initRateCardForm() {
         submitBtn.innerHTML = originalText;
       }
     }
-  });
+
+    return false;
+  };
+
+  form.onsubmit = handleBookingSubmit;
+  form.addEventListener("submit", handleBookingSubmit);
 }
 
 // Toast Notification
