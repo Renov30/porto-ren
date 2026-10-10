@@ -258,6 +258,11 @@ function renderProjects(filterCategory = "all") {
   });
   grid.querySelectorAll('[data-action="open-demo"]').forEach(btn => {
     btn.addEventListener("click", (e) => {
+      const showcase = document.querySelector(".projects-gallery-showcase");
+      if (showcase && showcase.classList.contains("is-wip")) {
+        showToast("Demo interaktif proyek sedang dalam tahap pembaruan data riil.");
+        return;
+      }
       const id = parseInt(btn.getAttribute("data-id"));
       const p = projectsData.find(item => item.id === id);
       if (p && p.liveDemo && p.liveDemo !== "#") {
@@ -300,6 +305,11 @@ function initModals() {
 }
 
 function openProjectModal(projectId) {
+  const showcase = document.querySelector(".projects-gallery-showcase");
+  if (showcase && showcase.classList.contains("is-wip")) {
+    showToast("Dokumentasi proyek sedang dalam tahap penyusunan data riil.");
+    return;
+  }
   const project = projectsData.find(p => p.id === projectId);
   if (!project) return;
   const overlay = document.getElementById("projectModalOverlay");

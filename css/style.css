@@ -131,6 +131,14 @@ select {
   border-radius: 4px;
 }
 
+.section-label-group {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
 .section-label {
   display: inline-block;
   font-family: var(--font-mono);
@@ -142,6 +150,23 @@ select {
   margin-bottom: 0.75rem;
   border-bottom: 2px solid var(--border-dark);
   padding-bottom: 0.2rem;
+}
+
+.section-label-group .section-label {
+  margin-bottom: 0;
+}
+
+.wip-status-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.6rem;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px dashed var(--border-dark);
+  border-radius: 4px;
 }
 
 .section-title {
@@ -724,6 +749,116 @@ select {
   padding: 7rem 0;
   background-color: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
+}
+
+/* Gallery Showcase & WIP Under-Construction State */
+.projects-gallery-showcase {
+  position: relative;
+  width: 100%;
+}
+
+.projects-gallery-showcase.is-wip .projects-gallery-blurred {
+  filter: blur(8px);
+  opacity: 0.32;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: filter var(--transition-smooth), opacity var(--transition-smooth);
+}
+
+.projects-gallery-showcase.is-wip .project-card,
+.projects-gallery-showcase.is-wip .project-img-box,
+.projects-gallery-showcase.is-wip .project-title,
+.projects-gallery-showcase.is-wip .btn-project-detail,
+.projects-gallery-showcase.is-wip .btn-project-link,
+.projects-gallery-showcase.is-wip .filter-btn {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+.projects-wip-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2.5rem 1rem;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.projects-wip-card {
+  position: sticky;
+  top: 130px;
+  background-color: var(--bg-card);
+  border: 2px solid var(--border-dark);
+  border-radius: 6px;
+  padding: 3rem 2.5rem;
+  max-width: 620px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+  pointer-events: auto;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.wip-badge-wrap {
+  margin-bottom: 1.25rem;
+}
+
+.wip-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 0.4rem 0.95rem;
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border: 1px solid var(--btn-primary-bg);
+}
+
+.wip-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.wip-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+}
+
+.wip-meta-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.wip-meta-dot {
+  color: var(--border-dark);
+}
+
+.wip-cta-wrap {
+  display: flex;
+  justify-content: center;
 }
 
 .portfolio-filter-bar {
@@ -2396,5 +2531,14 @@ a.analytics-handle:hover {
     bottom: 1rem;
     max-width: calc(100% - 2rem);
     text-align: center;
+  }
+
+  .projects-wip-card {
+    padding: 2.25rem 1.5rem;
+  }
+
+  .projects-wip-overlay {
+    top: 60px;
+    padding: 1.5rem 0.75rem;
   }
 }

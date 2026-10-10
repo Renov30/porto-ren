@@ -24,7 +24,7 @@
     rel="stylesheet"> -->
 
   <!-- Custom Stylesheet (Zero gradients, Zero icons, Zero logos) -->
-  <link rel="stylesheet" href="css/style.css?v=2.3">
+  <link rel="stylesheet" href="css/style.css?v=2.4">
 </head>
 
 <body>
@@ -72,11 +72,11 @@
   <section class="hero-section" id="beranda">
     <div class="container hero-top">
       <p class="hero-intro-text">
-        Halo, nama saya <span class="hero-intro-name">Novgeny R. Ermiawan</span> dan saya adalah seorang
+        Halo, nama saya <span class="hero-intro-nfame">Novgeny R. Ermiawan</span> dan saya adalah seorang
       </p>
     </div>
 
-    <!-- Massive Typographic Poster Layer + Central Overlapping Portrait -->
+    <!-- Massive Typographic Poster Layer + Central Ofverlapping Portrait -->
     <div class="hero-center-stage">
       <div class="hero-typography-layer">
         <h1 class="hero-title-solid"><span class="hero-title-text" role="button" tabindex="0" title="Klik untuk membuat foto transparan &amp; blur">Programmer</span></h1>
@@ -250,22 +250,54 @@
   <section class="projects-section" id="proyek">
     <div class="container">
       <div class="section-header">
-        <span class="section-label">02 / Portofolio Terpilih</span>
+        <div class="section-label-group">
+          <span class="section-label">02 / Portofolio Terpilih</span>
+          <span class="wip-status-tag">[SEDANG DALAM PENGERJAAN]</span>
+        </div>
         <h2 class="section-title">Galeri Proyek Unggulan</h2>
+        <p class="section-subtitle">
+          Dokumentasi studi kasus dan repositori proyek riil saat ini sedang dalam proses kurasi serta finalisasi rilis.
+        </p>
       </div>
 
-      <!-- Filter Kategori Proyek (Pure Text Buttons, No Icons) -->
-      <div class="portfolio-filter-bar">
-        <button class="filter-btn active" data-filter="all">Semua Proyek (00)</button>
-        <button class="filter-btn" data-filter="enterprise">Enterprise &amp; SIMRS (00)</button>
-        <button class="filter-btn" data-filter="fintech">FinTech &amp; UI/UX (00)</button>
-        <button class="filter-btn" data-filter="editorial">Editorial &amp; Desain (00)</button>
-        <button class="filter-btn" data-filter="mobile">Aplikasi Mobile (00)</button>
-      </div>
+      <!-- Gallery Showcase Wrapper with Under-Construction (WIP) State -->
+      <div class="projects-gallery-showcase is-wip">
+        <!-- Blurred Inner Content (Filter Bar & Projects Grid) -->
+        <div class="projects-gallery-blurred" aria-hidden="true">
+          <!-- Filter Kategori Proyek (Pure Text Buttons, No Icons) -->
+          <div class="portfolio-filter-bar">
+            <button class="filter-btn active" data-filter="all" tabindex="-1">Semua Proyek (00)</button>
+            <button class="filter-btn" data-filter="enterprise" tabindex="-1">Enterprise &amp; SIMRS (00)</button>
+            <button class="filter-btn" data-filter="fintech" tabindex="-1">FinTech &amp; UI/UX (00)</button>
+            <button class="filter-btn" data-filter="editorial" tabindex="-1">Editorial &amp; Desain (00)</button>
+            <button class="filter-btn" data-filter="mobile" tabindex="-1">Aplikasi Mobile (00)</button>
+          </div>
 
-      <!-- Dynamic Projects Grid -->
-      <div class="projects-grid" id="projectsGrid">
-        <!-- Rendered by JavaScript -->
+          <!-- Dynamic Projects Grid -->
+          <div class="projects-grid" id="projectsGrid">
+            <!-- Rendered by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Sticky Centered WIP Notice Card -->
+        <div class="projects-wip-overlay">
+          <div class="projects-wip-card">
+            <div class="wip-badge-wrap">
+              <span class="wip-badge">[STATUS: DALAM PENGERJAAN]</span>
+            </div>
+            <h3 class="wip-title">Katalog Proyek Riil Sedang Dalam Proses Finalisasi</h3>
+            <div class="wip-meta-strip">
+              <span class="wip-meta-item">ESTIMASI RILIS: SEGERA</span>
+              <span class="wip-meta-dot">&bull;</span>
+              <span class="wip-meta-item">15+ PROYEK ENTERPRISE &amp; KREATIF</span>
+            </div>
+            <div class="wip-cta-wrap">
+              <a href="#kontak" class="btn-hero-solid">
+                Konsultasikan Kebutuhan Proyek Anda &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -715,7 +747,7 @@
   <div id="appToast" class="toast-notice"></div>
 
   <!-- Application Script -->
-  <script src="js/app.js?v=2.3"></script>
+  <script src="js/app.js?v=2.4"></script>
 </body>
 
 </html>
