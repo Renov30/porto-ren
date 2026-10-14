@@ -24,7 +24,7 @@
     rel="stylesheet"> -->
 
   <!-- Custom Stylesheet (Zero gradients, Zero icons, Zero logos) -->
-  <link rel="stylesheet" href="css/style.css?v=2.5">
+  <link rel="stylesheet" href="css/style.css?v=2.6">
 </head>
 
 <body>
@@ -245,58 +245,194 @@
   </section>
 
   <!-- ==========================================================================
-       KARYA & PROYEK TERBAIK (Portfolio / Projects Gallery)
+       KARYA & PROYEK TERBAIK (Portfolio / Projects & Video Gallery)
        ========================================================================== -->
   <section class="projects-section" id="proyek">
     <div class="container">
       <div class="section-header">
         <div class="section-label-group">
-          <span class="section-label">02 / Portofolio Terpilih</span>
+          <span class="section-label">02 / Portofolio &amp; Karya Digital</span>
           <span class="wip-status-tag">[SEDANG DALAM PENGERJAAN]</span>
         </div>
-        <h2 class="section-title">Galeri Proyek Unggulan</h2>
-        <p class="section-subtitle">
-          Dokumentasi studi kasus dan repositori proyek riil saat ini sedang dalam proses kurasi serta finalisasi rilis.
-        </p>
+        <h2 class="section-title">Galeri Proyek &amp; Konten Kreatif</h2>
       </div>
 
-      <!-- Gallery Showcase Wrapper with Under-Construction (WIP) State -->
-      <div class="projects-gallery-showcase is-wip">
-        <!-- Blurred Inner Content (Filter Bar & Projects Grid) -->
-        <div class="projects-gallery-blurred" aria-hidden="true">
-          <!-- Filter Kategori Proyek (Pure Text Buttons, No Icons) -->
-          <div class="portfolio-filter-bar">
-            <button class="filter-btn active" data-filter="all" tabindex="-1">Semua Proyek (00)</button>
-            <button class="filter-btn" data-filter="enterprise" tabindex="-1">Enterprise &amp; SIMRS (00)</button>
-            <button class="filter-btn" data-filter="fintech" tabindex="-1">FinTech &amp; UI/UX (00)</button>
-            <button class="filter-btn" data-filter="editorial" tabindex="-1">Editorial &amp; Desain (00)</button>
-            <button class="filter-btn" data-filter="mobile" tabindex="-1">Aplikasi Mobile (00)</button>
+      <!-- ====================================================================
+           PROYEK PEMROGRAMAN & SISTEM APLIKASI
+           ==================================================================== -->
+      <div class="project-subsection-block">
+        <h3 class="subsection-divider-heading"
+          style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; margin-bottom: 2rem; border-bottom: 2px solid var(--border-dark); padding-bottom: 0.5rem;">
+          Portofolio Sistem &amp; Aplikasi
+        </h3>
+
+        <!-- Gallery Showcase Wrapper with Under-Construction (WIP) State -->
+        <div class="projects-gallery-showcase is-wip">
+          <!-- Blurred Inner Content (Filter Bar & Projects Grid) -->
+          <div class="projects-gallery-blurred" aria-hidden="true">
+            <!-- Filter Kategori Proyek (Pure Text Buttons, No Icons) -->
+            <div class="portfolio-filter-bar">
+              <button class="filter-btn active" data-filter="all" tabindex="-1">Semua Proyek (00)</button>
+              <button class="filter-btn" data-filter="enterprise" tabindex="-1">Enterprise &amp; SIMRS (00)</button>
+              <button class="filter-btn" data-filter="fintech" tabindex="-1">FinTech &amp; UI/UX (00)</button>
+              <button class="filter-btn" data-filter="editorial" tabindex="-1">Editorial &amp; Desain (00)</button>
+              <button class="filter-btn" data-filter="mobile" tabindex="-1">Aplikasi Mobile (00)</button>
+            </div>
+
+            <!-- Dynamic Projects Grid -->
+            <div class="projects-grid" id="projectsGrid">
+              <!-- Rendered by JavaScript -->
+            </div>
           </div>
 
-          <!-- Dynamic Projects Grid -->
-          <div class="projects-grid" id="projectsGrid">
-            <!-- Rendered by JavaScript -->
+          <!-- Sticky Centered WIP Notice Card -->
+          <div class="projects-wip-overlay">
+            <div class="projects-wip-card">
+              <div class="wip-badge-wrap">
+                <span class="wip-badge">[STATUS: DALAM PENGERJAAN]</span>
+              </div>
+              <h3 class="wip-title">Katalog Proyek Riil Sedang Dalam Proses Finalisasi</h3>
+              <div class="wip-meta-strip">
+                <span class="wip-meta-item">ESTIMASI RILIS: SEGERA</span>
+                <span class="wip-meta-dot">&bull;</span>
+                <span class="wip-meta-item">15+ PROYEK ENTERPRISE &amp; KREATIF</span>
+              </div>
+              <div class="wip-cta-wrap">
+                <a href="#kontak" class="btn-hero-solid wip-cta-btn">
+                  Konsultasikan Kebutuhan Proyek Anda &rarr;
+                </a>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        <!-- Sticky Centered WIP Notice Card -->
-        <div class="projects-wip-overlay">
-          <div class="projects-wip-card">
-            <div class="wip-badge-wrap">
-              <span class="wip-badge">[STATUS: DALAM PENGERJAAN]</span>
+      <!-- ====================================================================
+           PROYEK VIDEO & KONTEN YOUTUBE SHORTS
+           ==================================================================== -->
+      <div class="project-subsection-block project-subsection-divider">
+        <h3 class="subsection-divider-heading"
+          style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; margin-bottom: 2rem; border-bottom: 2px solid var(--border-dark); padding-bottom: 0.5rem;">
+          Portofolio Video &amp; Content
+        </h3>
+
+        <!-- YouTube Shorts Grid (Lightweight External Cards with Vertical Thumbnails) -->
+        <div class="shorts-grid">
+          <!-- Short Card 1 -->
+          <a href="https://youtube.com/@Renovgeny/shorts" target="_blank" rel="noopener noreferrer" class="short-card" aria-label="Tonton YouTube Short: Membangun Arsitektur Web Modern Berkecepatan Tinggi">
+            <div class="short-thumb-wrapper">
+              <img src="assets/images/project_editorial.jpg" alt="Thumbnail Short Arsitektur Web Modern" class="short-thumb-img" loading="lazy" width="400" height="622">
+              <div class="short-thumb-overlay"></div>
+              <div class="short-badge-row">
+                <span class="short-badge"><span class="short-badge-icon"></span>SHORTS</span>
+                <span class="short-duration">0:58</span>
+              </div>
+              <div class="short-play-btn" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20">
+                  <polygon points="6,3 20,12 6,21"></polygon>
+                </svg>
+              </div>
+              <div class="short-stats-row">
+                <span class="short-stat-views">2.4M Tayangan</span>
+                <span class="short-stat-platform">YouTube</span>
+              </div>
             </div>
-            <h3 class="wip-title">Katalog Proyek Riil Sedang Dalam Proses Finalisasi</h3>
-            <div class="wip-meta-strip">
-              <span class="wip-meta-item">ESTIMASI RILIS: SEGERA</span>
-              <span class="wip-meta-dot">&bull;</span>
-              <span class="wip-meta-item">15+ PROYEK ENTERPRISE &amp; KREATIF</span>
+            <div class="short-info-content">
+              <span class="short-topic-label">[WEB PERFORMANCE]</span>
+              <h4 class="short-title">Membangun Arsitektur Web Modern Berkecepatan Tinggi</h4>
+              <div class="short-action-link">
+                <span>Tonton di YouTube</span>
+                <span class="short-action-arrow">&nearr;</span>
+              </div>
             </div>
-            <div class="wip-cta-wrap">
-              <a href="#kontak" class="btn-hero-solid wip-cta-btn">
-                Konsultasikan Kebutuhan Proyek Anda &rarr;
-              </a>
+          </a>
+
+          <!-- Short Card 2 -->
+          <a href="https://youtube.com/@Renovgeny/shorts" target="_blank" rel="noopener noreferrer" class="short-card" aria-label="Tonton YouTube Short: Bedah Alur SIMRS Cloud &amp; Integrasi SatuSehat">
+            <div class="short-thumb-wrapper">
+              <img src="assets/images/project_health.jpg" alt="Thumbnail Short Bedah Alur SIMRS Cloud" class="short-thumb-img" loading="lazy" width="400" height="622">
+              <div class="short-thumb-overlay"></div>
+              <div class="short-badge-row">
+                <span class="short-badge"><span class="short-badge-icon"></span>SHORTS</span>
+                <span class="short-duration">0:52</span>
+              </div>
+              <div class="short-play-btn" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20">
+                  <polygon points="6,3 20,12 6,21"></polygon>
+                </svg>
+              </div>
+              <div class="short-stats-row">
+                <span class="short-stat-views">3.1M Tayangan</span>
+                <span class="short-stat-platform">YouTube</span>
+              </div>
             </div>
-          </div>
+            <div class="short-info-content">
+              <span class="short-topic-label">[SISTEM KESEHATAN]</span>
+              <h4 class="short-title">Bedah Alur SIMRS Cloud &amp; Standarisasi SatuSehat</h4>
+              <div class="short-action-link">
+                <span>Tonton di YouTube</span>
+                <span class="short-action-arrow">&nearr;</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Short Card 3 -->
+          <a href="https://youtube.com/@Renovgeny/shorts" target="_blank" rel="noopener noreferrer" class="short-card" aria-label="Tonton YouTube Short: Teknik Hook &amp; Pacing Video Pendek Berdaya Pikat">
+            <div class="short-thumb-wrapper">
+              <img src="assets/images/project_mobile.jpg" alt="Thumbnail Short Teknik Hook &amp; Pacing" class="short-thumb-img" loading="lazy" width="400" height="622">
+              <div class="short-thumb-overlay"></div>
+              <div class="short-badge-row">
+                <span class="short-badge"><span class="short-badge-icon"></span>SHORTS</span>
+                <span class="short-duration">0:45</span>
+              </div>
+              <div class="short-play-btn" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20">
+                  <polygon points="6,3 20,12 6,21"></polygon>
+                </svg>
+              </div>
+              <div class="short-stats-row">
+                <span class="short-stat-views">1.8M Tayangan</span>
+                <span class="short-stat-platform">YouTube</span>
+              </div>
+            </div>
+            <div class="short-info-content">
+              <span class="short-topic-label">[RETENTION EDITING]</span>
+              <h4 class="short-title">Teknik Hook &amp; Pacing Video Pendek Berdaya Pikat</h4>
+              <div class="short-action-link">
+                <span>Tonton di YouTube</span>
+                <span class="short-action-arrow">&nearr;</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Short Card 4 -->
+          <a href="https://youtube.com/@Renovgeny/shorts" target="_blank" rel="noopener noreferrer" class="short-card" aria-label="Tonton YouTube Short: Setup Produktivitas Minimalis Coding &amp; Konten 2026">
+            <div class="short-thumb-wrapper">
+              <img src="assets/images/project_fintech.jpg" alt="Thumbnail Short Setup Produktivitas Minimalis" class="short-thumb-img" loading="lazy" width="400" height="622">
+              <div class="short-thumb-overlay"></div>
+              <div class="short-badge-row">
+                <span class="short-badge"><span class="short-badge-icon"></span>SHORTS</span>
+                <span class="short-duration">0:59</span>
+              </div>
+              <div class="short-play-btn" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20">
+                  <polygon points="6,3 20,12 6,21"></polygon>
+                </svg>
+              </div>
+              <div class="short-stats-row">
+                <span class="short-stat-views">1.2M Tayangan</span>
+                <span class="short-stat-platform">YouTube</span>
+              </div>
+            </div>
+            <div class="short-info-content">
+              <span class="short-topic-label">[CREATOR WORKFLOW]</span>
+              <h4 class="short-title">Setup Produktivitas Minimalis: Coding &amp; Konten 2026</h4>
+              <div class="short-action-link">
+                <span>Tonton di YouTube</span>
+                <span class="short-action-arrow">&nearr;</span>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
     </div>
@@ -747,7 +883,7 @@
   <div id="appToast" class="toast-notice"></div>
 
   <!-- Application Script -->
-  <script src="js/app.js?v=2.4"></script>
+  <script src="js/app.js?v=2.6"></script>
 </body>
 
 </html>

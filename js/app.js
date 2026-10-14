@@ -679,7 +679,11 @@ function initScrollReveal() {
     ".pricing-card",
     ".bundle-card",
     ".workflow-card",
-    ".terms-card"
+    ".terms-card",
+    ".project-subsection-header",
+    ".video-card",
+    ".short-card",
+    ".video-channel-banner"
   ];
 
   const observerOptions = {
@@ -715,7 +719,9 @@ function initScrollReveal() {
           parent.classList.contains("analytics-cards-grid") ||
           parent.classList.contains("pricing-grid") ||
           parent.classList.contains("workflow-grid") ||
-          parent.classList.contains("terms-grid")
+          parent.classList.contains("terms-grid") ||
+          parent.classList.contains("video-projects-grid") ||
+          parent.classList.contains("shorts-grid")
         )) {
           const siblingIndex = Array.from(parent.children).indexOf(el);
           if (siblingIndex > 0) {
